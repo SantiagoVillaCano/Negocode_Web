@@ -1,0 +1,83 @@
+/* Themes */
+[data-theme='light'],
+:root {
+  --primary: #2563eb;
+  --primary-light: #60a5fa;
+  --primary-dark: #1d4ed8;
+  --primary-rgb: 37, 99, 235;
+
+  --secondary: #0f172a;
+  --accent: #06b6d4;
+  --accent-light: #67e8f9;
+
+  --background: #ffffff;
+  --background-alt: #f8fafc;
+  --surface: #f1f5f9;
+  --surface-hover: #e2e8f0;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+
+  --navbar-bg: rgba(255, 255, 255, 0.8);
+  --navbar-bg-solid: rgba(255, 255, 255, 0.95);
+
+  --card-bg: #ffffff;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
+  --card-shadow-hover: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+  --gradient-hero: linear-gradient(135deg, #eff6ff 0%, #ecfeff 50%, #f0f9ff 100%);
+  --gradient-cta: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #0e7490 100%);
+  --gradient-tavita: linear-gradient(135deg, #f0f9ff 0%, #ecfeff 100%);
+
+  --code-bg: #f1f5f9;
+
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+}
+
+[data-theme='dark'] {
+  --primary: #3b82f6;
+  --primary-light: #93c5fd;
+  --primary-dark: #2563eb;
+  --primary-rgb: 59, 130, 246;
+
+  --secondary: #f8fafc;
+  --accent: #22d3ee;
+  --accent-light: #a5f3fc;
+
+  --background: #0a0f1a;
+  --background-alt: #0f1629;
+  --surface: #151d2e;
+  --surface-hover: #1e293b;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+
+  --border: #1e293b;
+  --border-light: #151d2e;
+
+  --navbar-bg: rgba(10, 15, 26, 0.8);
+  --navbar-bg-solid: rgba(10, 15, 26, 0.95);
+
+  --card-bg: #111827;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --card-shadow-hover: 0 10px 25px -5px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+  --gradient-hero: linear-gradient(135deg, #0a0f1a 0%, #0f1629 50%, #0a1628 100%);
+  --gradient-cta: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%);
+  --gradient-tavita: linear-gradient(135deg, #0f1629 0%, #0a1628 100%);
+
+  --code-bg: #1e293b;
+
+  --success: #34d399;
+  --error: #f87171;
+  --warning: #fbbf24;
+}

@@ -1,0 +1,73 @@
+<!-- Navbar -->
+<nav class="navbar" [class.scrolled]="isScrolled()" role="navigation" aria-label="Navegación principal">
+  <div class="navbar-container">
+    <a class="navbar-brand" (click)="navigateTo('hero')" (keydown.enter)="navigateTo('hero')" tabindex="0" role="button">
+      <img src="/icon/Negocode-White.png" alt="Logo" class="brand-logo-img light-theme-img">
+      <img src="/icon/Negocode-Dark.png" alt="Logo" class="brand-logo-img dark-theme-img">
+    </a>
+
+    <div class="navbar-links" role="menubar">
+      @for (item of navItems; track item.label) {
+        <a
+          class="nav-link"
+          role="menuitem"
+          tabindex="0"
+          (click)="navigateTo(item)"
+          (keydown.enter)="navigateTo(item)"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </div>
+
+    <div class="navbar-actions">
+      <app-theme-toggle />
+      <a
+        class="btn btn-primary btn-sm nav-cta"
+        tabindex="0"
+        (click)="navigateTo('contact')"
+        (keydown.enter)="navigateTo('contact')"
+      >
+        Hablemos
+      </a>
+
+      <button
+        class="hamburger"
+        [class.active]="isMobileMenuOpen()"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-label="Menú de navegación"
+        type="button"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-overlay" (click)="closeMobileMenu()"></div>
+    <div class="mobile-menu" role="menu">
+      @for (item of navItems; track item.label) {
+        <a
+          class="mobile-link"
+          role="menuitem"
+          tabindex="0"
+          (click)="navigateTo(item)"
+          (keydown.enter)="navigateTo(item)"
+        >
+          {{ item.label }}
+        </a>
+      }
+      <a
+        class="btn btn-primary mobile-cta"
+        tabindex="0"
+        (click)="navigateTo('contact')"
+        (keydown.enter)="navigateTo('contact')"
+      >
+        Hablemos de tu proyecto
+      </a>
+    </div>
+  }
+</nav>
