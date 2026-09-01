@@ -26,12 +26,13 @@
       <div class="footer-nav">
         <h4 class="footer-title">Navegación</h4>
         <ul class="footer-links">
-          @for (item of navItems; track item.sectionId) {
+          @for (item of navItems; track item.label) {
             <li>
               <a
                 tabindex="0"
-                (click)="navigateTo(item.sectionId)"
-                (keydown.enter)="navigateTo(item.sectionId)"
+                [routerLink]="item.route || null"
+                (click)="navigateTo(item)"
+                (keydown.enter)="navigateTo(item)"
               >
                 {{ item.label }}
               </a>

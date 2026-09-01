@@ -12,6 +12,7 @@
           class="nav-link"
           role="menuitem"
           tabindex="0"
+          [routerLink]="item.route || null"
           (click)="navigateTo(item)"
           (keydown.enter)="navigateTo(item)"
         >
@@ -22,14 +23,6 @@
 
     <div class="navbar-actions">
       <app-theme-toggle />
-      <a
-        class="btn btn-primary btn-sm nav-cta"
-        tabindex="0"
-        (click)="navigateTo('contact')"
-        (keydown.enter)="navigateTo('contact')"
-      >
-        Hablemos
-      </a>
 
       <button
         class="hamburger"
@@ -54,20 +47,15 @@
           class="mobile-link"
           role="menuitem"
           tabindex="0"
+          [routerLink]="item.route || null"
           (click)="navigateTo(item)"
           (keydown.enter)="navigateTo(item)"
         >
           {{ item.label }}
         </a>
       }
-      <a
-        class="btn btn-primary mobile-cta"
-        tabindex="0"
-        (click)="navigateTo('contact')"
-        (keydown.enter)="navigateTo('contact')"
-      >
-        Hablemos de tu proyecto
-      </a>
     </div>
   }
 </nav>
+
+

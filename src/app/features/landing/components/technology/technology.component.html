@@ -1,0 +1,70 @@
+<section id="technology" class="tech-section" aria-label="Tecnologías que utilizamos">
+  <div class="tech-bg">
+    <div class="tech-grid-pattern"></div>
+    <div class="tech-glow tech-glow-1"></div>
+    <div class="tech-glow tech-glow-2"></div>
+    <div class="tech-float tech-float-1"></div>
+    <div class="tech-float tech-float-2"></div>
+    <div class="tech-float tech-float-3"></div>
+  </div>
+
+  <div class="container tech-content">
+    <div class="section-header text-center">
+      <h1 class="heading-lg mt-3">
+        Tecnologías que <span class="text-gradient">Impulsan tu Proyecto</span>
+      </h1>
+      <p class="section-description">
+        Utilizamos las herramientas y marcos de trabajo más avanzados, estables y modernos de la industria para desarrollar soluciones de software rápidas, seguras y preparadas para el futuro.
+      </p>
+    </div>
+
+    <!-- Tech Grid (4 Cards) -->
+    <div class="tech-grid">
+      @for (card of techCategories; track card.id) {
+        <div class="card tech-card">
+          <div class="card-top">
+            <div class="card-icon-wrap" [class]="'icon-' + card.id">
+              @if (card.id === 'frontend') {
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              } @else if (card.id === 'backend') {
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+              } @else if (card.id === 'database') {
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              }
+            </div>
+            <span class="tech-category-badge">{{ card.badge }}</span>
+          </div>
+
+          <h2 class="card-title">{{ card.title }}</h2>
+          <p class="card-subtitle">{{ card.subtitle }}</p>
+
+          <div class="tech-pills-container">
+            <span class="pills-label">Herramientas Principales:</span>
+            <div class="tech-pills">
+              @for (tech of card.technologies; track tech.name) {
+                <span class="tech-pill" [class.popular]="tech.isPopular">
+                  @if (tech.isPopular) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  }
+                  {{ tech.name }}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Callout Banner -->
+    <div class="card tech-banner mt-6">
+      <div class="banner-content text-center">
+        <h3 class="heading-md">¿Tienes una arquitectura o tecnología específica en mente?</h3>
+        <p class="text-secondary text-lg mt-2">
+          Nos adaptamos a las necesidades técnicas de tu proyecto o empresa. Si ya cuentas con un stack definido, lo integramos de forma óptima.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

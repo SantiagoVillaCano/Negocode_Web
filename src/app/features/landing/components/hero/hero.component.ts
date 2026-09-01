@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ScrollService } from '../../../../core/services/scroll.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hero',
@@ -8,9 +8,22 @@ import { ScrollService } from '../../../../core/services/scroll.service';
   styleUrl: './hero.component.css',
 })
 export class HeroComponent {
-  private readonly scrollService = inject(ScrollService);
+  private readonly router = inject(Router);
 
-  navigateTo(sectionId: string): void {
-    this.scrollService.scrollToSection(sectionId);
+  navigateTo(target: string): void {
+    const routeMap: Record<string, string> = {
+      services: '/servicios',
+      servicios: '/servicios',
+      contact: '/contacto',
+      contacto: '/contacto',
+      technology: '/tecnologia',
+      tecnologia: '/tecnologia',
+    };
+
+    const dest = routeMap[target.toLowerCase()] || target;
+    this.router.navigate([dest]).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }
+
