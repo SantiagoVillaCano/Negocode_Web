@@ -23,12 +23,4 @@ export class EmailService {
     return this.http.post<EmailResponse>(environment.apiEndpoint, payload);
   }
 
-  // Prueba de conexión
-  testConnection(): Observable<EmailResponse> {
-    return this.sendContactEmail({
-      name: 'Test NegoCode',
-      email: 'test@negocode.com',
-      message: '✅ Prueba de conexión exitosa con Resend desde NegoCode.',
-    });
-  }
 }

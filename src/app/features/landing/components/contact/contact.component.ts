@@ -32,7 +32,6 @@ export class ContactComponent {
   });
 
   readonly isSubmitting = signal(false);
-  readonly isTesting = signal(false);
 
   /**
    * REDES SOCIALES E INTERACCIONES DE CONTACTO
@@ -96,23 +95,6 @@ export class ContactComponent {
         this.isSubmitting.set(false);
         console.error('Error enviando correo:', err);
         this.toast.error('Error al enviar el mensaje. Intenta de nuevo.');
-      },
-    });
-  }
-
-  /** Prueba de conexión con Resend */
-  testResendConnection(): void {
-    this.isTesting.set(true);
-    this.emailService.testConnection().subscribe({
-      next: (res) => {
-        this.isTesting.set(false);
-        console.log('✅ Resend respuesta:', res);
-        this.toast.success('✅ Conexión con Resend funcionando correctamente.');
-      },
-      error: (err) => {
-        this.isTesting.set(false);
-        console.error('❌ Error Resend:', err);
-        this.toast.error(`❌ Error de conexión: ${err?.error?.message || err?.message || 'Revisa la consola.'}`);
       },
     });
   }
