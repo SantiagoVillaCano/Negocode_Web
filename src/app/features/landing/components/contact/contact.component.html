@@ -21,20 +21,6 @@
     <div class="form-wrapper">
       <div class="card contact-form-card">
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate class="contact-form">
-          @if (submitSuccessMessage()) {
-            <div class="alert alert-success" role="alert">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <span>{{ submitSuccessMessage() }}</span>
-            </div>
-          }
-
-          @if (submitErrorMessage()) {
-            <div class="alert alert-error" role="alert">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-              <span>{{ submitErrorMessage() }}</span>
-            </div>
-          }
-
           <div class="form-row">
             <!-- Nombre -->
             <div class="form-group">
@@ -122,6 +108,26 @@
             }
           </button>
         </form>
+
+        <!-- Botón de Prueba de Conexión Resend (dev) -->
+        <div class="test-connection-wrapper">
+          <button
+            type="button"
+            id="btn-test-resend"
+            class="btn-test-resend"
+            [disabled]="isTesting()"
+            (click)="testResendConnection()"
+          >
+            @if (isTesting()) {
+              <span class="spinner spinner-sm"></span>
+              Probando conexión...
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Probar conexión con Resend
+            }
+          </button>
+          <span class="test-hint">Envía un correo de prueba a negocode01&#64;gmail.com</span>
+        </div>
       </div>
     </div>
 

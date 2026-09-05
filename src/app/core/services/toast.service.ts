@@ -1,43 +1,44 @@
-import { Injectable, inject } from '@angular/core';
-import { HotToastService } from '@ngxpert/hot-toast';
+import { Injectable, signal } from '@angular/core';
+
+export interface Toast {
+  id: string;
+  type: 'success' | 'error' | 'info';
+  title: string;
+  message: string;
+  duration?: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  private readonly toast = inject(HotToastService);
+  readonly toasts = signal<Toast[]>([]);
 
-  success(message: string): void {
-    this.toast.success(message, {
-      duration: 4000,
-      style: {
-        border: '1px solid var(--success)',
-        padding: '12px 16px',
-        color: 'var(--text-primary)',
-        background: 'var(--card-bg)',
-      },
-    });
+  show(type: 'success' | 'error' | 'info', message: string, title?: string, duration = 3500): void {
+    const id = Math.random().toString(36).substring(2, 9);
+    const defaultTitle = title || (type === 'success' ? 'Mensaje Enviado' : type === 'error' ? 'Atención' : 'Notificación');
+    const newToast: Toast = { id, type, title: defaultTitle, message, duration };
+
+    this.toasts.update((current) => [...current, newToast]);
+
+    if (duration > 0) {
+      setTimeout(() => {
+        this.dismiss(id);
+      }, duration);
+    }
   }
 
-  error(message: string): void {
-    this.toast.error(message, {
-      duration: 5000,
-      style: {
-        border: '1px solid var(--error)',
-        padding: '12px 16px',
-        color: 'var(--text-primary)',
-        background: 'var(--card-bg)',
-      },
-    });
+  success(message: string, title?: string): void {
+    this.show('success', message, title, 3500);
   }
 
-  info(message: string): void {
-    this.toast.info(message, {
-      duration: 3000,
-      style: {
-        border: '1px solid var(--primary)',
-        padding: '12px 16px',
-        color: 'var(--text-primary)',
-        background: 'var(--card-bg)',
-      },
-    });
+  error(message: string, title?: string): void {
+    this.show('error', message, title, 3500);
+  }
+
+  info(message: string, title?: string): void {
+    this.show('info', message, title, 3500);
+  }
+
+  dismiss(id: string): void {
+    this.toasts.update((current) => current.filter((t) => t.id !== id));
   }
 }

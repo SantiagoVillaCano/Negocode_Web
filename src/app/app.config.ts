@@ -9,7 +9,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(),
-    provideHotToastConfig()
+    provideHotToastConfig({
+      position: 'bottom-right',
+      duration: 3500,
+      dismissible: true,
+    })
   ]
 };
 

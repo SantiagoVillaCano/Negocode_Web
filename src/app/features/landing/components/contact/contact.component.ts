@@ -32,8 +32,7 @@ export class ContactComponent {
   });
 
   readonly isSubmitting = signal(false);
-  readonly submitSuccessMessage = signal<string | null>(null);
-  readonly submitErrorMessage = signal<string | null>(null);
+  readonly isTesting = signal(false);
 
   /**
    * REDES SOCIALES E INTERACCIONES DE CONTACTO
@@ -45,7 +44,6 @@ export class ContactComponent {
       name: 'Gmail',
       description: 'contacto@negocode.com',
       actionText: 'Enviar Correo Directo',
-      // COPIA/PEGA TU CORREO O ENLACE AQUÍ:
       url: 'mailto:contacto@negocode.com',
       icon: 'gmail',
       badge: 'Email Oficial',
@@ -55,7 +53,6 @@ export class ContactComponent {
       name: 'Facebook',
       description: 'Página oficial de NegoCode',
       actionText: 'Visitar Página',
-      // COPIA/PEGA LA URL DE TU FACEBOOK AQUÍ:
       url: 'https://facebook.com/negocode',
       icon: 'facebook',
       badge: 'Comunidad',
@@ -65,7 +62,6 @@ export class ContactComponent {
       name: 'Instagram',
       description: '@negocode_official',
       actionText: 'Seguir en Instagram',
-      // COPIA/PEGA LA URL DE TU INSTAGRAM AQUÍ:
       url: 'https://instagram.com/negocode',
       icon: 'instagram',
       badge: 'Red Social',
@@ -75,7 +71,6 @@ export class ContactComponent {
       name: 'Discord',
       description: 'Servidor de desarrollo NegoCode',
       actionText: 'Unirse al Servidor',
-      // COPIA/PEGA EL ENLACE DE TU DISCORD AQUÍ:
       url: 'https://discord.gg/negocode',
       icon: 'discord',
       badge: 'Chat en Vivo',
@@ -83,9 +78,6 @@ export class ContactComponent {
   ];
 
   onSubmit(): void {
-    this.submitSuccessMessage.set(null);
-    this.submitErrorMessage.set(null);
-
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       this.toast.error('Por favor completa todos los campos del formulario correctamente.');
@@ -94,26 +86,33 @@ export class ContactComponent {
 
     this.isSubmitting.set(true);
 
-    const formValues = this.contactForm.value;
-
-    this.emailService.sendContactEmail(formValues).subscribe({
-      next: (response) => {
+    this.emailService.sendContactEmail(this.contactForm.value).subscribe({
+      next: () => {
         this.isSubmitting.set(false);
-        if (response.success) {
-          this.submitSuccessMessage.set(response.message);
-          this.toast.success(response.message);
-          this.contactForm.reset();
-        } else {
-          this.submitErrorMessage.set(response.message);
-          this.toast.error(response.message);
-        }
+        this.toast.success('¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.');
+        this.contactForm.reset();
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        const errMsg = 'Error inesperado al conectar con el servicio de correo.';
-        this.submitErrorMessage.set(errMsg);
-        this.toast.error(errMsg);
-        console.error('Error submitting contact form:', err);
+        console.error('Error enviando correo:', err);
+        this.toast.error('Error al enviar el mensaje. Intenta de nuevo.');
+      },
+    });
+  }
+
+  /** Prueba de conexión con Resend */
+  testResendConnection(): void {
+    this.isTesting.set(true);
+    this.emailService.testConnection().subscribe({
+      next: (res) => {
+        this.isTesting.set(false);
+        console.log('✅ Resend respuesta:', res);
+        this.toast.success('✅ Conexión con Resend funcionando correctamente.');
+      },
+      error: (err) => {
+        this.isTesting.set(false);
+        console.error('❌ Error Resend:', err);
+        this.toast.error(`❌ Error de conexión: ${err?.error?.message || err?.message || 'Revisa la consola.'}`);
       },
     });
   }
