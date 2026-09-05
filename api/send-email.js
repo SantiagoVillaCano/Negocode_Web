@@ -1,21 +1,39 @@
-import { Resend } from 'resend';
+const { Resend } = require('resend');
 
-const resend = new Resend(process.env['RESEND_KEY']);
+module.exports = async function handler(req, res) {
+  // CORS headers para permitir peticiones desde el frontend
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-export default async function handler(req, res) {
-  // Solo acepta POST
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ success: false, message: 'Method not allowed' });
+  }
+
+  // Verificar que la variable de entorno está configurada
+  const apiKey = process.env['RESEND_KEY'];
+  if (!apiKey) {
+    console.error('❌ RESEND_KEY no está configurada en las variables de entorno de Vercel.');
+    return res.status(500).json({
+      success: false,
+      message: 'Configuración del servidor incompleta. Contacta al administrador.',
+    });
   }
 
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
-    return res.status(400).json({ error: 'Faltan campos requeridos.' });
+    return res.status(400).json({ success: false, message: 'Faltan campos requeridos.' });
   }
 
   try {
-    await resend.emails.send({
+    const resend = new Resend(apiKey);
+
+    const result = await resend.emails.send({
       from: 'NegoCode <onboarding@resend.dev>',
       to: ['negocode01@gmail.com'],
       subject: `Nuevo mensaje de: ${name}`,
@@ -32,9 +50,14 @@ export default async function handler(req, res) {
       `,
     });
 
+    console.log('✅ Correo enviado:', result);
     return res.status(200).json({ success: true, message: '¡Mensaje enviado con éxito!' });
+
   } catch (error) {
-    console.error('Error Resend:', error);
-    return res.status(500).json({ success: false, message: 'Error al enviar el mensaje.' });
+    console.error('❌ Error al enviar con Resend:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al enviar el mensaje. Intenta de nuevo.',
+    });
   }
-}
+};
